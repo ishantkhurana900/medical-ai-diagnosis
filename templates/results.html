@@ -1,0 +1,400 @@
+{% extends "base.html" %}
+
+{% block title %}Analysis Results - Medical AI Assistant{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Emergency Alert -->
+    {% if results.emergency_warning.warning %}
+    <div class="emergency-alert text-center">
+        <h4><i class="fas fa-exclamation-triangle"></i> ⚠️ EMERGENCY ALERT ⚠️</h4>
+        <p class="mb-2"><strong>{{ results.emergency_warning.message }}</strong></p>
+        <p class="mb-2">{{ results.emergency_warning.action }}</p>
+        <div class="mt-3">
+            <a href="tel:911" class="btn btn-danger btn-lg me-2">
+                <i class="fas fa-phone"></i> Call 911
+            </a>
+            <a href="tel:1-800-222-1222" class="btn btn-warning btn-lg">
+                <i class="fas fa-info-circle"></i> Poison Control
+            </a>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="row">
+        <!-- Main Results -->
+        <div class="col-lg-8">
+            <!-- Analysis Summary -->
+            <div class="card shadow mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-clipboard-check"></i>
+                        AI Analysis Results
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <!-- Input Summary -->
+                    <div class="bg-light p-3 rounded mb-4">
+                        <h6><i class="fas fa-quote-left"></i> Your Symptoms:</h6>
+                        <blockquote class="blockquote">
+                            <p class="mb-2">"{{ symptoms }}"</p>
+                        </blockquote>
+
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <small><strong><i class="fas fa-list-check"></i> Detected Symptoms:</strong></small>
+                                {% if results.input_symptoms %}
+                                <ul class="list-unstyled mt-2">
+                                    {% for symptom in results.input_symptoms %}
+                                    <li><i class="fas fa-check-circle text-success"></i> {{ symptom.title() }}</li>
+                                    {% endfor %}
+                                </ul>
+                                {% else %}
+                                <p class="text-muted mt-2">No specific symptoms detected</p>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6">
+                                <small><strong><i class="fas fa-thermometer-half"></i> Severity Assessment:</strong></small>
+                                <div class="mt-2">
+                                    <span class="badge fs-6 {% if results.severity == 'High' %}bg-danger{% elif results.severity == 'Medium' %}bg-warning text-dark{% else %}bg-success{% endif %}">
+                                        {% if results.severity == 'High' %}
+                                            <i class="fas fa-exclamation-triangle"></i> HIGH SEVERITY
+                                        {% elif results.severity == 'Medium' %}
+                                            <i class="fas fa-exclamation-circle"></i> MEDIUM SEVERITY
+                                        {% else %}
+                                            <i class="fas fa-info-circle"></i> LOW SEVERITY
+                                        {% endif %}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Possible Conditions -->
+                    <h5 class="mb-3"><i class="fas fa-stethoscope"></i> Possible Medical Conditions:</h5>
+                    {% if results.conditions %}
+                        {% for condition in results.conditions %}
+                        <div class="card condition-card confidence-{{ condition.confidence_level.lower() }} mb-3">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col-md-8">
+                                        <h6 class="card-title mb-1">
+                                            <i class="fas fa-diagnoses"></i>
+                                            {{ condition.name }}
+                                            <span class="badge {% if condition.confidence_level == 'High' %}bg-success{% elif condition.confidence_level == 'Medium' %}bg-warning text-dark{% else %}bg-secondary{% endif %} ms-2">
+                                                {{ condition.confidence_level }} Confidence
+                                            </span>
+                                        </h6>
+                                        <p class="card-text text-muted mb-2">{{ condition.description }}</p>
+                                        <small class="text-muted">
+                                            <i class="fas fa-thermometer-half"></i>
+                                            Condition Severity: <strong>{{ condition.severity }}</strong>
+                                        </small>
+                                    </div>
+                                    <div class="col-md-4 text-end">
+                                        <div class="mb-2">
+                                            <div class="progress" style="height: 12px;">
+                                                <div class="progress-bar {% if condition.confidence >= 0.8 %}bg-success{% elif condition.confidence >= 0.6 %}bg-warning{% elif condition.confidence >= 0.4 %}bg-info{% else %}bg-secondary{% endif %}" 
+                                                     style="width: {{ (condition.confidence * 100)|round }}%">
+                                                </div>
+                                            </div>
+                                            <small class="text-muted">{{ (condition.confidence * 100)|round }}% match</small>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Condition Details (Collapsible) -->
+                                <div class="mt-3">
+                                    <button class="btn btn-outline-primary btn-sm" type="button" 
+                                            data-bs-toggle="collapse" data-bs-target="#condition{{ loop.index }}"
+                                            aria-expanded="false">
+                                        <i class="fas fa-info-circle"></i>
+                                        View Details & Recommendations
+                                    </button>
+
+                                    <div class="collapse mt-3" id="condition{{ loop.index }}">
+                                        <div class="card card-body bg-light border-0">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <h6><i class="fas fa-pills text-primary"></i> Treatment Recommendations:</h6>
+                                                    <ul class="mb-3">
+                                                        {% for rec in condition.recommendations %}
+                                                        <li>{{ rec }}</li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <h6><i class="fas fa-user-md text-success"></i> When to See a Doctor:</h6>
+                                                    <p class="mb-0 small">{{ condition.see_doctor }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle"></i>
+                            <strong>No specific conditions identified.</strong> Based on your symptoms, we recommend consulting a healthcare professional for proper evaluation and diagnosis.
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="d-flex gap-2 mb-4 flex-wrap">
+                <a href="/diagnose" class="btn btn-primary">
+                    <i class="fas fa-redo"></i>
+                    New Analysis
+                </a>
+                <button class="btn btn-outline-secondary" onclick="window.print()">
+                    <i class="fas fa-print"></i>
+                    Print Results
+                </button>
+                <button class="btn btn-outline-info" onclick="shareResults()">
+                    <i class="fas fa-share"></i>
+                    Share
+                </button>
+                <button class="btn btn-outline-success" onclick="downloadResults()">
+                    <i class="fas fa-download"></i>
+                    Download Report
+                </button>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <!-- Recommendations -->
+            <div class="card shadow mb-4">
+                <div class="card-header bg-success text-white">
+                    <h6 class="mb-0">
+                        <i class="fas fa-lightbulb"></i>
+                        AI Recommendations
+                    </h6>
+                </div>
+                <div class="card-body">
+                    {% for recommendation in results.recommendations %}
+                    <div class="d-flex mb-3">
+                        <div class="me-3">
+                            {% if 'emergency' in recommendation.lower() or '⚠️' in recommendation %}
+                                <i class="fas fa-exclamation-triangle text-danger fa-lg"></i>
+                            {% elif 'consult' in recommendation.lower() or '💊' in recommendation %}
+                                <i class="fas fa-user-md text-primary fa-lg"></i>
+                            {% elif 'monitor' in recommendation.lower() or '📞' in recommendation %}
+                                <i class="fas fa-chart-line text-warning fa-lg"></i>
+                            {% else %}
+                                <i class="fas fa-home text-success fa-lg"></i>
+                            {% endif %}
+                        </div>
+                        <div>
+                            <small>{{ recommendation }}</small>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Important Notes -->
+            <div class="card shadow mb-4">
+                <div class="card-header bg-warning text-dark">
+                    <h6 class="mb-0">
+                        <i class="fas fa-exclamation-circle"></i>
+                        Important Notes
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-3">
+                            <i class="fas fa-shield-alt text-primary"></i>
+                            <small><strong>Educational Only:</strong> This analysis is for educational purposes and should not replace professional medical advice.</small>
+                        </li>
+                        <li class="mb-3">
+                            <i class="fas fa-user-md text-success"></i>
+                            <small><strong>See a Doctor:</strong> Always consult healthcare professionals for proper diagnosis and treatment.</small>
+                        </li>
+                        <li class="mb-3">
+                            <i class="fas fa-clock text-info"></i>
+                            <small><strong>Monitor Symptoms:</strong> Seek immediate help if symptoms worsen or new symptoms develop.</small>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone text-danger"></i>
+                            <small><strong>Emergency:</strong> Call 911 for life-threatening symptoms or severe emergencies.</small>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Emergency Contacts -->
+            <div class="card shadow mb-4">
+                <div class="card-header bg-danger text-white">
+                    <h6 class="mb-0">
+                        <i class="fas fa-phone"></i>
+                        Emergency Contacts
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <strong>Emergency Services:</strong><br>
+                        <a href="tel:911" class="btn btn-danger btn-sm mt-1">
+                            <i class="fas fa-phone"></i> Call 911
+                        </a>
+                    </div>
+                    <div class="mb-3">
+                        <strong>Poison Control:</strong><br>
+                        <a href="tel:1-800-222-1222" class="btn btn-warning btn-sm mt-1">
+                            <i class="fas fa-phone"></i> 1-800-222-1222
+                        </a>
+                    </div>
+                    <div>
+                        <strong>Crisis Helpline:</strong><br>
+                        <a href="tel:988" class="btn btn-info btn-sm mt-1">
+                            <i class="fas fa-phone"></i> Call 988
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analysis Info -->
+            <div class="card shadow">
+                <div class="card-header bg-info text-white">
+                    <h6 class="mb-0">
+                        <i class="fas fa-chart-bar"></i>
+                        Analysis Details
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <small class="text-muted">
+                        <div class="mb-2">
+                            <strong>Analysis Time:</strong><br>
+                            {{ results.timestamp[:19] if results.timestamp else 'Just now' }}
+                        </div>
+                        <div class="mb-2">
+                            <strong>AI Model:</strong><br>
+                            Medical Symptom Classifier v1.0
+                        </div>
+                        <div>
+                            <strong>Confidence Levels:</strong><br>
+                            High (80%+), Medium (60-79%), Low (40-59%)
+                        </div>
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Clear Draft -->
+    <div class="text-center mt-4">
+        <button class="btn btn-outline-secondary btn-sm" onclick="clearDraft()">
+            <i class="fas fa-trash"></i> Clear Saved Draft
+        </button>
+    </div>
+
+    <!-- Final Disclaimer -->
+    <div class="disclaimer-banner mt-4">
+        <div class="row align-items-center">
+            <div class="col-md-1 text-center">
+                <i class="fas fa-exclamation-triangle fa-2x text-warning"></i>
+            </div>
+            <div class="col-md-11">
+                <h6>Medical Disclaimer</h6>
+                <p class="mb-0">{{ results.disclaimer }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function shareResults() {
+    const shareData = {
+        title: 'Medical AI Analysis Results',
+        text: 'I used an AI medical assistant to analyze my symptoms.',
+        url: window.location.href
+    };
+
+    if (navigator.share) {
+        navigator.share(shareData);
+    } else {
+        // Fallback for browsers that don't support Web Share API
+        const url = window.location.href;
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(url).then(function() {
+                alert('Results URL copied to clipboard!');
+            });
+        } else {
+            prompt('Copy this URL to share your results:', url);
+        }
+    }
+}
+
+function downloadResults() {
+    const symptoms = "{{ symptoms }}";
+    const conditions = {{ results.conditions | tojson }};
+    const recommendations = {{ results.recommendations | tojson }};
+
+    let report = "MEDICAL AI ANALYSIS REPORT\n";
+    report += "================================\n\n";
+    report += "Symptoms: " + symptoms + "\n\n";
+    report += "Detected Conditions:\n";
+
+    if (conditions && conditions.length > 0) {
+        conditions.forEach((condition, index) => {
+            report += `${index + 1}. ${condition.name} (${condition.confidence_level} confidence)\n`;
+            report += `   Description: ${condition.description}\n`;
+            report += `   Severity: ${condition.severity}\n\n`;
+        });
+    }
+
+    report += "Recommendations:\n";
+    if (recommendations && recommendations.length > 0) {
+        recommendations.forEach((rec, index) => {
+            report += `${index + 1}. ${rec}\n`;
+        });
+    }
+
+    report += "\n\nIMPORTANT: This analysis is for educational purposes only. Always consult healthcare professionals.";
+
+    const blob = new Blob([report], { type: 'text/plain' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.style.display = 'none';
+    a.href = url;
+    a.download = 'medical_ai_analysis_report.txt';
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+}
+
+function clearDraft() {
+    if (confirm('Are you sure you want to clear your saved symptom draft?')) {
+        localStorage.removeItem('symptoms_draft');
+        alert('Draft cleared successfully!');
+    }
+}
+
+// Auto-scroll to emergency alert if present
+document.addEventListener('DOMContentLoaded', function() {
+    const emergencyAlert = document.querySelector('.emergency-alert');
+    if (emergencyAlert) {
+        emergencyAlert.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+});
+
+// Print styles
+window.addEventListener('beforeprint', function() {
+    document.querySelectorAll('.btn, .collapse:not(.show)').forEach(el => {
+        el.style.display = 'none';
+    });
+    document.querySelectorAll('.collapse').forEach(el => {
+        el.classList.add('show');
+    });
+});
+
+window.addEventListener('afterprint', function() {
+    window.location.reload();
+});
+</script>
+{% endblock %}

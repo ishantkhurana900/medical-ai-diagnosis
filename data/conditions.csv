@@ -1,0 +1,9 @@
+id,name,severity,description,recommendations,see_doctor
+1,Common Cold,Low,A viral infection of the upper respiratory tract,"['Rest', 'Stay hydrated', 'Use throat lozenges', 'Over-the-counter medications']",If symptoms persist more than 10 days or worsen significantly
+2,Influenza (Flu),Medium,A viral infection that attacks the respiratory system,"['Rest', 'Stay hydrated', 'Antiviral medications if prescribed', 'Fever reducers']",For severe symptoms difficulty breathing or if high-risk individual
+3,Migraine Headache,Medium,A type of headache characterized by severe throbbing pain,"['Rest in dark quiet room', 'Apply cold compress', 'Stay hydrated', 'Prescription medications']",For frequent migraines or severe symptoms that interfere with daily life
+4,Gastritis,Medium,Inflammation of the stomach lining,"['Avoid spicy foods', 'Eat smaller meals', 'Avoid alcohol', 'Antacids']",For persistent pain blood in vomit or severe symptoms
+5,Food Poisoning,Medium,Illness caused by eating contaminated food,"['Stay hydrated', 'Rest', 'Bland diet when able', 'Electrolyte replacement']",For severe dehydration high fever or blood in stool
+6,Tension Headache,Low,Most common type of headache caused by muscle tension,"['Rest', 'Apply heat or cold', 'Over-the-counter pain relievers', 'Stress management']",If headaches become frequent or severe
+7,Anxiety Disorder,Low,Excessive worry or fear that interferes with daily activities,"['Deep breathing exercises', 'Regular exercise', 'Limit caffeine', 'Consider counseling']",If anxiety interferes with daily life or causes panic attacks
+8,Allergic Reaction,Low,Immune system response to allergens,"['Avoid known allergens', 'Antihistamines', 'Cool compresses for rash']",For severe reactions difficulty breathing or swelling

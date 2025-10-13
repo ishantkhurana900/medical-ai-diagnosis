@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+
+{% block title %}Medical AI Assistant - Home{% endblock %}
+
+{% block content %}
+<div class="medical-header">
+    <div class="container text-center">
+        <h1 class="display-4">
+            <i class="fas fa-robot"></i>
+            AI-Powered Medical Assistant
+        </h1>
+        <p class="lead">Get preliminary health insights based on your symptoms</p>
+        <a href="/diagnose" class="btn btn-light btn-lg mt-3">
+            <i class="fas fa-search"></i>
+            Start Symptom Analysis
+        </a>
+    </div>
+</div>
+
+<div class="container">
+    <!-- Disclaimer -->
+    <div class="disclaimer-banner text-center">
+        <h5><i class="fas fa-exclamation-triangle text-warning"></i> Important Notice</h5>
+        <p class="mb-0">This tool is for educational purposes only and should not replace professional medical advice. Always consult with a healthcare provider for proper diagnosis and treatment.</p>
+    </div>
+
+    <!-- Features -->
+    <div class="row mt-5">
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 text-center">
+                <div class="card-body">
+                    <div class="text-primary mb-3">
+                        <i class="fas fa-brain fa-3x"></i>
+                    </div>
+                    <h5>AI Analysis</h5>
+                    <p>Advanced machine learning algorithms analyze your symptoms using medical knowledge databases.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 text-center">
+                <div class="card-body">
+                    <div class="text-success mb-3">
+                        <i class="fas fa-clipboard-list fa-3x"></i>
+                    </div>
+                    <h5>Symptom Tracking</h5>
+                    <p>Describe symptoms in natural language and get structured analysis with severity assessment.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 text-center">
+                <div class="card-body">
+                    <div class="text-info mb-3">
+                        <i class="fas fa-user-md fa-3x"></i>
+                    </div>
+                    <h5>Medical Guidance</h5>
+                    <p>Get recommendations for next steps and when to seek professional medical attention.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- How It Works -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <h2 class="text-center mb-4">How It Works</h2>
+        </div>
+        <div class="col-md-3 text-center mb-3">
+            <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                <span class="h4 mb-0">1</span>
+            </div>
+            <h5 class="mt-2">Describe Symptoms</h5>
+            <p>Tell us about your symptoms in your own words</p>
+        </div>
+        <div class="col-md-3 text-center mb-3">
+            <div class="bg-success text-white rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                <span class="h4 mb-0">2</span>
+            </div>
+            <h5 class="mt-2">AI Analysis</h5>
+            <p>Our AI processes and analyzes your symptoms</p>
+        </div>
+        <div class="col-md-3 text-center mb-3">
+            <div class="bg-info text-white rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                <span class="h4 mb-0">3</span>
+            </div>
+            <h5 class="mt-2">Get Results</h5>
+            <p>Receive possible conditions with confidence levels</p>
+        </div>
+        <div class="col-md-3 text-center mb-3">
+            <div class="bg-warning text-white rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                <span class="h4 mb-0">4</span>
+            </div>
+            <h5 class="mt-2">Take Action</h5>
+            <p>Follow recommendations and consult professionals</p>
+        </div>
+    </div>
+
+    <!-- Emergency Warning -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="alert alert-danger text-center">
+                <h5><i class="fas fa-exclamation-triangle"></i> Emergency Situations</h5>
+                <p class="mb-2">If you experience any of these symptoms, seek immediate medical attention:</p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul class="list-unstyled">
+                            <li>• Chest pain or pressure</li>
+                            <li>• Difficulty breathing</li>
+                            <li>• Severe headache</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="list-unstyled">
+                            <li>• Loss of consciousness</li>
+                            <li>• Severe bleeding</li>
+                            <li>• Signs of stroke</li>
+                        </ul>
+                    </div>
+                </div>
+                <p class="mb-0"><strong>Call 911 immediately for emergency situations!</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Call to Action -->
+    <div class="text-center mt-5 mb-5">
+        <h3>Ready to start?</h3>
+        <p class="text-muted">Describe your symptoms and get AI-powered health insights</p>
+        <a href="/diagnose" class="btn btn-primary btn-lg">
+            <i class="fas fa-play-circle"></i>
+            Begin Analysis
+        </a>
+    </div>
+</div>
+{% endblock %}

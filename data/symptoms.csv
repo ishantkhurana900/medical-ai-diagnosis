@@ -1,0 +1,21 @@
+id,name,category,severity_multiplier
+1,headache,neurological,1.2
+2,fever,general,1.5
+3,cough,respiratory,1.1
+4,sore throat,respiratory,1.0
+5,runny nose,respiratory,0.8
+6,fatigue,general,1.0
+7,nausea,digestive,1.3
+8,vomiting,digestive,1.6
+9,diarrhea,digestive,1.4
+10,stomach pain,digestive,1.3
+11,back pain,musculoskeletal,1.1
+12,chest pain,cardiovascular,2.0
+13,shortness of breath,respiratory,1.8
+14,dizziness,neurological,1.4
+15,muscle aches,musculoskeletal,1.1
+16,joint pain,musculoskeletal,1.2
+17,skin rash,dermatological,1.0
+18,loss of appetite,general,1.1
+19,difficulty sleeping,general,0.9
+20,anxiety,mental_health,1.2

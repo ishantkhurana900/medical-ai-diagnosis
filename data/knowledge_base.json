@@ -1,0 +1,22 @@
+{
+  "emergency_symptoms": [
+    "chest pain",
+    "difficulty breathing", 
+    "severe headache",
+    "loss of consciousness",
+    "severe bleeding",
+    "signs of stroke"
+  ],
+  "severity_keywords": {
+    "high": ["severe", "extreme", "unbearable", "worst", "excruciating", "intense"],
+    "medium": ["moderate", "significant", "noticeable", "uncomfortable", "bad"],
+    "low": ["mild", "slight", "minor", "little bit", "somewhat", "light"]
+  },
+  "body_systems": {
+    "cardiovascular": ["heart", "chest", "circulation"],
+    "respiratory": ["lungs", "breathing", "airways"],
+    "digestive": ["stomach", "intestines", "digestion"],
+    "neurological": ["brain", "nerves", "nervous system"],
+    "musculoskeletal": ["muscles", "bones", "joints"]
+  }
+}

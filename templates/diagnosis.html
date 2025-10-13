@@ -1,0 +1,254 @@
+{% extends "base.html" %}
+
+{% block title %}Symptom Analysis - Medical AI Assistant{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-stethoscope"></i>
+                        Symptom Analysis
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <!-- Error Message -->
+                    {% if error %}
+                    <div class="alert alert-danger" role="alert">
+                        <i class="fas fa-exclamation-circle"></i>
+                        {{ error }}
+                    </div>
+                    {% endif %}
+
+                    <!-- Symptom Input Form -->
+                    <form method="POST" action="/diagnose" id="symptomForm">
+                        <div class="mb-4">
+                            <label for="symptoms" class="form-label">
+                                <strong><i class="fas fa-comment-medical"></i> Describe your symptoms:</strong>
+                            </label>
+                            <textarea 
+                                class="form-control" 
+                                id="symptoms" 
+                                name="symptoms" 
+                                rows="5" 
+                                placeholder="Please describe your symptoms in detail. For example: 'I have been experiencing a severe headache with nausea and sensitivity to light for the past 2 days. I also feel dizzy when I stand up.'"
+                                required
+                            ></textarea>
+                            <div class="form-text">
+                                <i class="fas fa-info-circle"></i>
+                                Be as specific as possible about your symptoms, their severity, duration, and any triggers you've noticed.
+                            </div>
+                        </div>
+
+                        <!-- Common Symptoms (Quick Select) -->
+                        <div class="mb-4">
+                            <label class="form-label">
+                                <strong><i class="fas fa-mouse-pointer"></i> Or click to add common symptoms:</strong>
+                            </label>
+                            <div class="d-flex flex-wrap">
+                                <button type="button" class="btn btn-outline-primary symptom-btn" onclick="addSymptom('headache')">
+                                    <i class="fas fa-head-side-cough"></i> Headache
+                                </button>
+                                <button type="button" class="btn btn-outline-danger symptom-btn" onclick="addSymptom('fever')">
+                                    <i class="fas fa-thermometer-half"></i> Fever
+                                </button>
+                                <button type="button" class="btn btn-outline-warning symptom-btn" onclick="addSymptom('cough')">
+                                    <i class="fas fa-lungs"></i> Cough
+                                </button>
+                                <button type="button" class="btn btn-outline-info symptom-btn" onclick="addSymptom('sore throat')">
+                                    <i class="fas fa-prescription-bottle"></i> Sore Throat
+                                </button>
+                                <button type="button" class="btn btn-outline-secondary symptom-btn" onclick="addSymptom('runny nose')">
+                                    <i class="fas fa-head-side-virus"></i> Runny Nose
+                                </button>
+                                <button type="button" class="btn btn-outline-dark symptom-btn" onclick="addSymptom('fatigue')">
+                                    <i class="fas fa-bed"></i> Fatigue
+                                </button>
+                                <button type="button" class="btn btn-outline-success symptom-btn" onclick="addSymptom('nausea')">
+                                    <i class="fas fa-dizzy"></i> Nausea
+                                </button>
+                                <button type="button" class="btn btn-outline-danger symptom-btn" onclick="addSymptom('stomach pain')">
+                                    <i class="fas fa-hand-holding-heart"></i> Stomach Pain
+                                </button>
+                                <button type="button" class="btn btn-outline-warning symptom-btn" onclick="addSymptom('back pain')">
+                                    <i class="fas fa-walking"></i> Back Pain
+                                </button>
+                                <button type="button" class="btn btn-outline-primary symptom-btn" onclick="addSymptom('dizziness')">
+                                    <i class="fas fa-head-side-cough-slash"></i> Dizziness
+                                </button>
+                                <button type="button" class="btn btn-outline-info symptom-btn" onclick="addSymptom('muscle aches')">
+                                    <i class="fas fa-dumbbell"></i> Muscle Aches
+                                </button>
+                                <button type="button" class="btn btn-outline-secondary symptom-btn" onclick="addSymptom('anxiety')">
+                                    <i class="fas fa-brain"></i> Anxiety
+                                </button>
+                            </div>
+                            <small class="text-muted">Click buttons to add symptoms to your description</small>
+                        </div>
+
+                        <!-- Severity Indicators -->
+                        <div class="mb-4">
+                            <label class="form-label">
+                                <strong><i class="fas fa-chart-line"></i> How would you rate your overall symptoms?</strong>
+                            </label>
+                            <div class="d-flex gap-2">
+                                <button type="button" class="btn btn-outline-success severity-btn" onclick="addSeverity('mild')">
+                                    <i class="fas fa-smile"></i> Mild
+                                </button>
+                                <button type="button" class="btn btn-outline-warning severity-btn" onclick="addSeverity('moderate')">
+                                    <i class="fas fa-meh"></i> Moderate
+                                </button>
+                                <button type="button" class="btn btn-outline-danger severity-btn" onclick="addSeverity('severe')">
+                                    <i class="fas fa-frown"></i> Severe
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-search"></i>
+                                Analyze My Symptoms
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- Loading Spinner -->
+                    <div class="loading-spinner" id="loadingSpinner">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Analyzing...</span>
+                        </div>
+                        <p class="mt-2">🤖 AI is analyzing your symptoms...</p>
+                        <small class="text-muted">This may take a few seconds</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Medical Disclaimer -->
+            <div class="disclaimer-banner mt-4">
+                <h6><i class="fas fa-shield-alt"></i> Privacy & Safety Information</h6>
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul class="mb-0">
+                            <li>Your symptom information is processed securely</li>
+                            <li>Data is not shared with third parties</li>
+                            <li>Analysis is for educational purposes only</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="mb-0">
+                            <li>Always seek professional medical advice</li>
+                            <li>Contact emergency services for urgent symptoms</li>
+                            <li>This tool does not replace doctor consultation</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Tips -->
+            <div class="card mt-4">
+                <div class="card-header bg-info text-white">
+                    <h6 class="mb-0"><i class="fas fa-lightbulb"></i> Tips for Better Analysis</h6>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>Include details about:</h6>
+                            <ul>
+                                <li>When symptoms started</li>
+                                <li>Severity level (mild, moderate, severe)</li>
+                                <li>What makes it better or worse</li>
+                                <li>Associated symptoms</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Example descriptions:</h6>
+                            <ul>
+                                <li>"Severe headache for 2 days with nausea"</li>
+                                <li>"Chest pain when breathing deeply"</li>
+                                <li>"Persistent cough with fever since yesterday"</li>
+                                <li>"Stomach pain after eating, feels bloated"</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function addSymptom(symptom) {
+    const textarea = document.getElementById('symptoms');
+    const currentText = textarea.value.trim();
+
+    if (currentText === '') {
+        textarea.value = 'I have ' + symptom;
+    } else if (!currentText.toLowerCase().includes(symptom.toLowerCase())) {
+        textarea.value = currentText + ' and ' + symptom;
+    }
+
+    // Visual feedback
+    event.target.classList.add('btn-success');
+    setTimeout(() => {
+        event.target.classList.remove('btn-success');
+    }, 1000);
+}
+
+function addSeverity(severity) {
+    const textarea = document.getElementById('symptoms');
+    const currentText = textarea.value.trim();
+
+    if (currentText === '') {
+        textarea.value = 'I have ' + severity + ' symptoms';
+    } else {
+        // Replace existing severity or add new one
+        let newText = currentText.replace(/(mild|moderate|severe)/gi, severity);
+        if (newText === currentText) {
+            newText = severity + ' ' + currentText;
+        }
+        textarea.value = newText;
+    }
+
+    // Visual feedback
+    document.querySelectorAll('.severity-btn').forEach(btn => {
+        btn.classList.remove('btn-success', 'btn-warning', 'btn-danger');
+        btn.classList.add('btn-outline-' + (btn.textContent.includes('Mild') ? 'success' : btn.textContent.includes('Moderate') ? 'warning' : 'danger'));
+    });
+    event.target.classList.remove('btn-outline-success', 'btn-outline-warning', 'btn-outline-danger');
+    event.target.classList.add('btn-' + (severity === 'mild' ? 'success' : severity === 'moderate' ? 'warning' : 'danger'));
+}
+
+document.getElementById('symptomForm').addEventListener('submit', function(e) {
+    const symptomsText = document.getElementById('symptoms').value.trim();
+    if (symptomsText.length < 10) {
+        e.preventDefault();
+        alert('Please provide more detailed description of your symptoms (at least 10 characters).');
+        return;
+    }
+
+    document.getElementById('loadingSpinner').style.display = 'block';
+    document.querySelector('.card-body').style.opacity = '0.7';
+});
+
+// Auto-save functionality
+let saveTimeout;
+document.getElementById('symptoms').addEventListener('input', function() {
+    clearTimeout(saveTimeout);
+    saveTimeout = setTimeout(() => {
+        localStorage.setItem('symptoms_draft', this.value);
+    }, 1000);
+});
+
+// Load saved draft
+document.addEventListener('DOMContentLoaded', function() {
+    const savedDraft = localStorage.getItem('symptoms_draft');
+    if (savedDraft && document.getElementById('symptoms').value.trim() === '') {
+        document.getElementById('symptoms').value = savedDraft;
+    }
+});
+</script>
+{% endblock %}

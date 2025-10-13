@@ -1,0 +1,290 @@
+{% extends "base.html" %}
+
+{% block title %}How It Works - Medical AI Assistant{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <!-- Main Info Card -->
+            <div class="card shadow">
+                <div class="card-header bg-info text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-info-circle"></i>
+                        How Our Medical AI Assistant Works
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <!-- Overview -->
+                    <div class="row mb-5">
+                        <div class="col-12">
+                            <h5><i class="fas fa-eye"></i> Overview</h5>
+                            <p class="lead">Our Medical AI Assistant uses advanced machine learning algorithms to analyze symptoms and provide preliminary health insights. It combines natural language processing, medical knowledge databases, and predictive modeling to help users understand their symptoms better.</p>
+                        </div>
+                    </div>
+
+                    <!-- Technology Stack -->
+                    <div class="row mb-5">
+                        <div class="col-12">
+                            <h5><i class="fas fa-cogs"></i> Technology Behind the AI</h5>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="card bg-light h-100">
+                                <div class="card-body">
+                                    <h6><i class="fas fa-brain text-primary"></i> Machine Learning</h6>
+                                    <ul class="mb-0">
+                                        <li><strong>Random Forest Classifier:</strong> Ensemble method for robust predictions</li>
+                                        <li><strong>Logistic Regression:</strong> Statistical analysis of symptom patterns</li>
+                                        <li><strong>TF-IDF Vectorization:</strong> Text feature extraction</li>
+                                        <li><strong>Ensemble Methods:</strong> Combining multiple models for accuracy</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="card bg-light h-100">
+                                <div class="card-body">
+                                    <h6><i class="fas fa-language text-success"></i> Natural Language Processing</h6>
+                                    <ul class="mb-0">
+                                        <li><strong>Symptom Extraction:</strong> Identifying medical terms from text</li>
+                                        <li><strong>Text Preprocessing:</strong> Cleaning and tokenization</li>
+                                        <li><strong>Medical Entity Recognition:</strong> Understanding medical language</li>
+                                        <li><strong>Severity Assessment:</strong> Evaluating symptom intensity</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- How Analysis Works -->
+                    <div class="row mb-5">
+                        <div class="col-12">
+                            <h5><i class="fas fa-gear"></i> Step-by-Step Analysis Process</h5>
+                        </div>
+                        <div class="col-md-3 text-center mb-4">
+                            <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                                <i class="fas fa-keyboard fa-2x"></i>
+                            </div>
+                            <h6>1. Input Processing</h6>
+                            <p class="small">Your symptom description is cleaned, tokenized, and preprocessed using medical NLP techniques to extract meaningful information.</p>
+                        </div>
+                        <div class="col-md-3 text-center mb-4">
+                            <div class="bg-success text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                                <i class="fas fa-search fa-2x"></i>
+                            </div>
+                            <h6>2. Feature Extraction</h6>
+                            <p class="small">Symptoms are identified and mapped to standardized medical terminology using pattern matching and synonym recognition.</p>
+                        </div>
+                        <div class="col-md-3 text-center mb-4">
+                            <div class="bg-info text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                                <i class="fas fa-calculator fa-2x"></i>
+                            </div>
+                            <h6>3. AI Prediction</h6>
+                            <p class="small">Machine learning models analyze symptom patterns and predict possible medical conditions with confidence scores.</p>
+                        </div>
+                        <div class="col-md-3 text-center mb-4">
+                            <div class="bg-warning text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                                <i class="fas fa-clipboard-list fa-2x"></i>
+                            </div>
+                            <h6>4. Results & Recommendations</h6>
+                            <p class="small">Conditions are ranked by confidence with personalized recommendations and safety guidance.</p>
+                        </div>
+                    </div>
+
+                    <!-- Accuracy & Limitations -->
+                    <div class="row mb-5">
+                        <div class="col-md-6">
+                            <div class="card border-success h-100">
+                                <div class="card-header bg-success text-white">
+                                    <h6 class="mb-0"><i class="fas fa-check-circle"></i> What Our AI Does Well</h6>
+                                </div>
+                                <div class="card-body">
+                                    <ul class="mb-0">
+                                        <li>✅ Recognizes 20+ common medical symptoms</li>
+                                        <li>✅ Processes natural language descriptions</li>
+                                        <li>✅ Provides confidence levels for predictions</li>
+                                        <li>✅ Offers personalized recommendations</li>
+                                        <li>✅ Identifies emergency situations</li>
+                                        <li>✅ Assesses symptom severity</li>
+                                        <li>✅ Supports multiple symptom combinations</li>
+                                        <li>✅ Available 24/7 for preliminary analysis</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card border-warning h-100">
+                                <div class="card-header bg-warning text-white">
+                                    <h6 class="mb-0"><i class="fas fa-exclamation-triangle"></i> Important Limitations</h6>
+                                </div>
+                                <div class="card-body">
+                                    <ul class="mb-0">
+                                        <li>⚠️ Cannot replace professional medical diagnosis</li>
+                                        <li>⚠️ Limited to common conditions in training data</li>
+                                        <li>⚠️ May not detect rare or complex conditions</li>
+                                        <li>⚠️ Cannot perform physical examinations</li>
+                                        <li>⚠️ Accuracy varies by condition type</li>
+                                        <li>⚠️ No access to medical history or test results</li>
+                                        <li>⚠️ Cannot prescribe medications</li>
+                                        <li>⚠️ For educational purposes only</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Training Data -->
+                    <div class="row mb-5">
+                        <div class="col-12">
+                            <h5><i class="fas fa-database"></i> Training Data & Knowledge Base</h5>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card bg-primary text-white text-center">
+                                <div class="card-body">
+                                    <i class="fas fa-list-ul fa-2x mb-2"></i>
+                                    <h3>20+</h3>
+                                    <p class="mb-0">Common Symptoms</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card bg-success text-white text-center">
+                                <div class="card-body">
+                                    <i class="fas fa-diagnoses fa-2x mb-2"></i>
+                                    <h3>8</h3>
+                                    <p class="mb-0">Medical Conditions</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card bg-info text-white text-center">
+                                <div class="card-body">
+                                    <i class="fas fa-chart-line fa-2x mb-2"></i>
+                                    <h3>165+</h3>
+                                    <p class="mb-0">Training Examples</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Safety Features -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <h5><i class="fas fa-shield-alt"></i> Built-in Safety Features</h5>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="text-center mb-3">
+                                <i class="fas fa-exclamation-triangle fa-3x text-danger mb-3"></i>
+                                <h6>Emergency Detection</h6>
+                                <p class="small">Automatically identifies emergency symptoms like chest pain or difficulty breathing and provides urgent care guidance with direct links to emergency services.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="text-center mb-3">
+                                <i class="fas fa-user-md fa-3x text-primary mb-3"></i>
+                                <h6>Medical Disclaimers</h6>
+                                <p class="small">Clear disclaimers throughout the application emphasize the educational nature and the critical need for professional medical consultation.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="text-center mb-3">
+                                <i class="fas fa-lock fa-3x text-success mb-3"></i>
+                                <h6>Privacy Protection</h6>
+                                <p class="small">Symptom data is processed securely and not stored permanently. Your privacy and confidentiality are protected at all times.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Technical Specifications -->
+            <div class="card shadow mt-4">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="mb-0"><i class="fas fa-code"></i> Technical Specifications</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>Backend Technology</h6>
+                            <ul>
+                                <li><strong>Framework:</strong> Flask (Python)</li>
+                                <li><strong>Database:</strong> SQLAlchemy with SQLite</li>
+                                <li><strong>ML Libraries:</strong> scikit-learn, NLTK, spaCy</li>
+                                <li><strong>Data Processing:</strong> Pandas, NumPy</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Frontend Technology</h6>
+                            <ul>
+                                <li><strong>UI Framework:</strong> Bootstrap 5</li>
+                                <li><strong>Icons:</strong> Font Awesome</li>
+                                <li><strong>JavaScript:</strong> Vanilla JS with modern features</li>
+                                <li><strong>Responsive:</strong> Mobile-first design</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Usage Statistics -->
+            <div class="card shadow mt-4">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0"><i class="fas fa-chart-bar"></i> Model Performance</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-md-3">
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    <h4 class="text-primary">~85%</h4>
+                                    <small>Training Accuracy</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    <h4 class="text-success">~75%</h4>
+                                    <small>Test Accuracy</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    <h4 class="text-info">&lt; 3s</h4>
+                                    <small>Analysis Time</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    <h4 class="text-warning">100%</h4>
+                                    <small>Free to Use</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Call to Action -->
+            <div class="text-center mt-5 mb-4">
+                <h4>Ready to Try the AI Assistant?</h4>
+                <p class="text-muted">Experience intelligent symptom analysis with our advanced medical AI</p>
+                <div class="d-flex gap-3 justify-content-center flex-wrap">
+                    <a href="/diagnose" class="btn btn-primary btn-lg">
+                        <i class="fas fa-stethoscope"></i>
+                        Start Symptom Analysis
+                    </a>
+                    <a href="/" class="btn btn-outline-secondary btn-lg">
+                        <i class="fas fa-home"></i>
+                        Back to Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
