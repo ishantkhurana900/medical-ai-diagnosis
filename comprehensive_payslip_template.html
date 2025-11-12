@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Incentive Intelligence</title>
+  <style>
+    /* AI: Start */
+    @page {
+        size: A4 landscape;
+        margin: 15mm;
+    }
+    /* AI: End */
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        font-size: 12px;
+    }
+    /* AI: Start */
+    .header-container {
+        position: relative;
+        width: 100%;
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+    }
+    .header-title {
+        text-align: center;
+        padding-top: 10px;
+    }
+    .header-logo {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+    .report-title {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 5px;
+        color: #0066cc;
+    }
+    .report-subtitle {
+        font-size: 14px;
+        color: #666;
+    }
+    /* AI: End */
+    .employee-info {
+        display: table;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+    .employee-info-row {
+        display: table-row;
+    }
+    /* AI: Start */
+    .employee-info-cell {
+        display: table-cell;
+        padding: 5px;
+        border: 1px solid #ddd;
+        width: 25%;
+    }
+    /* AI: End */
+    .employee-info-label {
+        font-weight: bold;
+        background-color: #f5f5f5;
+    }
+    .section-title {
+        font-size: 14px;
+        font-weight: bold;
+        margin: 20px 0 10px 0;
+        color: #0066cc;
+        border-bottom: 1px solid #0066cc;
+        padding-bottom: 5px;
+    }
+    .data-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+    .data-table th, .data-table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+    .data-table th {
+        background-color: #f5f5f5;
+        font-weight: bold;
+    }
+    .data-table tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+    /* AI: Start */
+    /* Optimized styling for base incentive table with many columns */
+    .base-incentive-table {
+        font-size: 9px;
+    }
+    .base-incentive-table th,
+    .base-incentive-table td {
+        padding: 5px;
+        white-space: nowrap;
+    }
+    /* AI: End */
+    /* AI: Start */
+    /* Prevent page breaks inside table rows */
+    .data-table tr,
+    .base-incentive-table tr {
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+    
+    /* Keep table headers with their content and repeat on each page */
+    .data-table thead,
+    .base-incentive-table thead {
+        display: table-header-group;
+    }
+    
+    /* Ensure proper page breaks for tables */
+    .data-table,
+    .base-incentive-table {
+        page-break-before: auto;
+        page-break-after: auto;
+    }
+    
+    /* Prevent page breaks inside table body */
+    .data-table tbody,
+    .base-incentive-table tbody {
+        page-break-inside: auto;
+    }
+    /* AI: End */
+    .footer {
+        margin-top: 30px;
+        text-align: center;
+        font-size: 10px;
+        color: #666;
+        border-top: 1px solid #ddd;
+        padding-top: 10px;
+    }
+    .metric-breakdown {
+        margin-left: 20px;
+        font-size: 11px;
+    }
+  </style>
+</head>
+<body>
+<!-- AI: Start -->
+<!-- Header -->
+<div class="header-container">
+  <div class="header-title">
+    <div class="report-title">INCENTIVE METER </div>
+    <div class="report-subtitle" 
+         th:text="${monthwiseIncentiveBreakdownSummary != null && !monthwiseIncentiveBreakdownSummary.isEmpty()} ? 
+                  ${monthwiseIncentiveBreakdownSummary[0].month} + ' - ' + ${monthwiseIncentiveBreakdownSummary[0].year} : 
+                  'N/A'">
+    </div>
+  </div>
+  <div class="header-logo">
+    <img src="../static/images/logo.png" width="100" height="50" alt="Logo" />
+  </div>
+</div>
+<!-- AI: End -->
+
+<!-- Employee Profile Details -->
+<div class="section-title">Profile Details</div>
+<div class="employee-info">
+  <div class="employee-info-row">
+    <div class="employee-info-cell employee-info-label">Emp Code</div>
+    <div class="employee-info-cell" th:text="${employeeId}"></div>
+    <div class="employee-info-cell employee-info-label">Emp Name</div>
+    <div class="employee-info-cell" th:text="${employeeName}"></div>
+  </div>
+  <div class="employee-info-row">
+    <div class="employee-info-cell employee-info-label">Vintage</div>
+    <div class="employee-info-cell" th:text="${employeeDOJ}"></div>
+    <div class="employee-info-cell employee-info-label">Month</div>
+    <!-- AI: Start -->
+    <div class="employee-info-cell" th:text="${#temporals.format(#temporals.createNow(), 'MMM-yyyy')}"></div>
+    <!-- AI: End -->
+  </div>
+  <div class="employee-info-row">
+    <div class="employee-info-cell employee-info-label">Designation</div>
+    <div class="employee-info-cell" th:text="${employeeDesignation}"></div>
+    <div class="employee-info-cell employee-info-label">Branch Tier</div>
+    <div class="employee-info-cell" th:text="${employeeBranchTier}"></div>
+  </div>
+  <div class="employee-info-row">
+    <div class="employee-info-cell employee-info-label">Department</div>
+    <div class="employee-info-cell" th:text="${employeeProductVertical}"></div>
+    <div class="employee-info-cell employee-info-label">Reporting Manager Id</div>
+    <div class="employee-info-cell" th:text="${employeeSMId}"></div>
+  </div>
+
+</div>
+
+<!-- Base Incentive Breakdown -->
+<div class="section-title">Summary for the Month</div>
+<table class="data-table" th:if="${monthwiseIncentiveBreakdownSummary != null and !monthwiseIncentiveBreakdownSummary.isEmpty()}">
+  <thead>
+  <tr>
+    <th>Month</th>
+    <th>Year</th>
+    <th>Base Incentive</th>
+    <th>Non Base Incentive</th>
+    <th>Recovery Arrear Incentive</th>
+    <th>Deferred Incentive</th>
+    <!-- AI: Start -->
+    <th>Total Incentive</th>
+    <!-- AI: End -->
+  </tr>
+  </thead>
+  <tbody>
+  <!-- AI: Start -->
+  <tr th:each="summary : ${monthwiseIncentiveBreakdownSummary}">
+    <td th:text="${summary.month}"></td>
+    <td th:text="${summary.year}"></td>
+    <td th:text="${#numbers.formatDecimal(summary.baseIncentive, 1, 0)}"></td>
+    <td th:text="${#numbers.formatDecimal(summary.nonBaseIncentive, 1, 0)}"></td>
+    <td th:text="${#numbers.formatDecimal(summary.recoveryArrearIncentive, 1, 0)}"></td>
+    <td th:text="${#numbers.formatDecimal(summary.deferredIncentive, 1, 0)}"></td>
+    <td th:text="${#numbers.formatDecimal(summary.baseIncentive + summary.nonBaseIncentive + summary.recoveryArrearIncentive, 1, 0)}"></td>
+  </tr>
+  <!-- AI: End -->
+  </tbody>
+</table>
+
+<!-- AI: Start -->
+<!-- Base Incentive Table -->
+<div class="section-title">LANs considered for Base Incentive</div>
+<table class="data-table base-incentive-table" th:if="${baseIncentiveTable != null and !baseIncentiveTable.isEmpty()}">
+  <thead>
+  <tr>
+    <!-- Use headerLabel from the first record's table.headers as column headers -->
+    <th th:each="header : ${baseIncentiveTable[0].table.headers}" th:text="${header.headerLabel}"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <!-- Display all entries from all months as rows -->
+  <th:block th:each="baseTable : ${baseIncentiveTable}">
+    <tr th:each="entry : ${baseTable.table.entries}">
+      <!-- For each header, access the corresponding value from entry.values using headerLabel as key -->
+      <td th:each="header : ${baseTable.table.headers}" th:text="${entry.values[header.headerLabel]}"></td>
+    </tr>
+  </th:block>
+  </tbody>
+</table>
+<!-- AI: End -->
+
+<!-- AI: Start -->
+<!-- Non Base Incentive -->
+<div class="section-title">Non-Base Incentive Breakdown</div>
+<table class="data-table" th:if="${monthwiseNonBaseIncentiveBreakDown != null and !monthwiseNonBaseIncentiveBreakDown.isEmpty()}">
+  <thead>
+  <tr>
+    <!-- Use displayName from the first record as headers -->
+    <th th:each="metric : ${monthwiseNonBaseIncentiveBreakDown[0].metrics}" th:text="${metric.displayName}"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <!-- AI: Start -->
+  <!-- Display all records as rows with rounded decimal values -->
+  <tr th:each="nonBase : ${monthwiseNonBaseIncentiveBreakDown}">
+    <td th:each="metric : ${nonBase.metrics}">
+      <th:block th:if="${metric.metricValue != null and #strings.contains(metric.metricValue, '.')}">
+        <span th:text="${#numbers.formatDecimal(T(java.lang.Double).parseDouble(metric.metricValue), 1, 0)}"></span>
+      </th:block>
+      <th:block th:if="${metric.metricValue != null and !#strings.contains(metric.metricValue, '.')}">
+        <span th:text="${metric.metricValue}"></span>
+      </th:block>
+      <th:block th:if="${metric.metricValue == null}">
+        <span>0</span>
+      </th:block>
+    </td>
+  </tr>
+  <!-- AI: End -->
+  </tbody>
+</table>
+<!-- AI: End -->
+
+<!-- AI: Start -->
+<!-- Recovery / Arrears -->
+<div class="section-title">Recovery / Arrears Incentive Breakdown</div>
+<table class="data-table" th:if="${monthwiseRecoveryArrearIncentiveBreakDown != null and !monthwiseRecoveryArrearIncentiveBreakDown.isEmpty()}">
+  <thead>
+  <tr>
+    <!-- Use headerLabel from the first record's table.headers as column headers -->
+    <th th:each="header : ${monthwiseRecoveryArrearIncentiveBreakDown[0].table.headers}" th:text="${header.headerLabel}"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <!-- AI: Start -->
+  <!-- Display all entries from all months as rows with rounded decimal values -->
+  <th:block th:each="recovery : ${monthwiseRecoveryArrearIncentiveBreakDown}">
+    <tr th:each="entry : ${recovery.table.entries}">
+      <!-- For each header, access the corresponding value from entry.values using headerLabel as key -->
+      <td th:each="header : ${recovery.table.headers}">
+        <th:block th:if="${entry.values[header.headerLabel] != null and header.headerType == 'Double'}">
+          <span th:text="${#numbers.formatDecimal(entry.values[header.headerLabel], 1, 0)}"></span>
+        </th:block>
+        <th:block th:if="${entry.values[header.headerLabel] != null and header.headerType != 'Double'}">
+          <span th:text="${entry.values[header.headerLabel]}"></span>
+        </th:block>
+        <th:block th:if="${entry.values[header.headerLabel] == null}">
+          <span>0</span>
+        </th:block>
+      </td>
+    </tr>
+  </th:block>
+  <!-- AI: End -->
+  </tbody>
+</table>
+<!-- AI: End -->
+
+
+
+<!-- AI: Start -->
+<!-- Footer -->
+<div class="footer">
+  <p>This is a digitally generated file. All values in this report are indicative and not statutory. In case of Queries, please raise an iHelp Ticket</p>
+  <p>&copy; 2025 Piramal Finance. All rights reserved.</p>
+</div>
+<!-- AI: End -->
+
+</body>
+</html>
